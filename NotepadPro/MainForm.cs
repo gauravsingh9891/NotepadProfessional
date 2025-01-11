@@ -1,11 +1,12 @@
 using System.IO;
+using System.Runtime.CompilerServices;
 namespace NotepadPro
 {
     public partial class MainForm : Form
     {
-        private bool fileAlreadySaved;
-        private bool fileUpdated;
-        private string currentFileName;
+        private bool IsAlreadySaved;
+        private bool IsFileUpdated;
+        private string CurrentFilename;
         public MainForm()
         {
             InitializeComponent();
@@ -41,12 +42,16 @@ namespace NotepadPro
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richTextBox1.Undo();
+            undoToolStripMenuItem.Enabled = false;
+            redoToolStripMenuItem.Enabled = true;
         }
 
         //This will for Redo feature
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richTextBox1.Redo();
+            undoToolStripMenuItem.Enabled = true;
+            redoToolStripMenuItem.Enabled = false;
         }
 
         //This will Enable or Disable status bar
@@ -80,7 +85,24 @@ namespace NotepadPro
         //This will clear and open fresh notepad
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            richTextBox1.Clear();
+            if(IsFileUpdated)
+            {
+                DialogResult dr = MessageBox.Show("Do you want to save your changes?", "File Save", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        SaveFileUpdate(); ClearScreen();
+                        break;
+                    case DialogResult.No:
+                        ClearScreen();
+                        break;
+                }
+            }
+            else
+            { 
+                ClearScreen();
+            }
+            
         }
 
         //This will open the dialog box to choose .txt or .rtf file and load  
@@ -97,13 +119,23 @@ namespace NotepadPro
                 else if (Path.GetExtension(openFileDialog1.FileName) == ".rtf")
                     richTextBox1.LoadFile(openFileDialog1.FileName, RichTextBoxStreamType.RichText);
                 FileName = Path.GetFileName(openFileDialog1.FileName);
-                FileName = FileName.Remove(FileName.LastIndexOf('.'));
+                //FileName = FileName.Remove(FileName.LastIndexOf('.'));
                 this.Text = FileName + " - Notepad Pro";
+
+                IsAlreadySaved = true;
+                IsFileUpdated = false;
+                CurrentFilename = openFileDialog1.FileName;
             }
         }
 
         //This will save as feature , used to save the file with new name
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        //Save File function
+        private void SaveFile()
         {
             string FileName = "";
             saveFileDialog1.FileName = ".txt";
@@ -120,14 +152,69 @@ namespace NotepadPro
                     richTextBox1.SaveFile(saveFileDialog1.FileName, RichTextBoxStreamType.RichText);
                 }
                 FileName = Path.GetFileName(saveFileDialog1.FileName);
-                FileName = FileName.Remove(FileName.LastIndexOf('.'));
+                //FileName = FileName.Remove(FileName.LastIndexOf('.'));
                 this.Text = FileName + " - Notepad Pro";
+                IsAlreadySaved = true;
+                IsFileUpdated = false;
+                CurrentFilename = saveFileDialog1.FileName;
             }
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            IsAlreadySaved = false;
+            IsFileUpdated = false;
+            CurrentFilename = "";
+        }
+
+        //This Used for any file changes then update the status
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            IsFileUpdated = true;
+            undoToolStripMenuItem.Enabled = true;
+        }
+
+        //This is used for implement Save file feature
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileUpdate();
+        }
 
+        //This function is used to save file updated status
+        private void SaveFileUpdate()
+        {
+            if (IsAlreadySaved)
+            {
+                if (Path.GetExtension(CurrentFilename) == ".txt")
+                {
+                    richTextBox1.SaveFile(CurrentFilename, RichTextBoxStreamType.PlainText);
+                }
+                else if (Path.GetExtension(CurrentFilename) == ".rtf")
+                {
+                    richTextBox1.SaveFile(CurrentFilename, RichTextBoxStreamType.RichText);
+                }
+                IsFileUpdated = false;
+            }
+            else
+            {
+                if (IsFileUpdated)
+                {
+                    SaveFile();
+                }
+                else
+                {
+                    ClearScreen();
+                }
+            }
+        }
+
+        //This function is used to Clear the text on Notepad.
+        private void ClearScreen()
+        {
+            richTextBox1.Clear();
+            IsFileUpdated = false;
+            IsAlreadySaved = false;
+            this.Text = "Untitled - Notepad Pro";
         }
     }
 }
