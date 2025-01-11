@@ -102,7 +102,7 @@ namespace NotepadPro
             { 
                 ClearScreen();
             }
-            
+            undoToolStripMenuItem.Enabled = false;
         }
 
         //This will open the dialog box to choose .txt or .rtf file and load  
@@ -126,6 +126,7 @@ namespace NotepadPro
                 IsFileUpdated = false;
                 CurrentFilename = openFileDialog1.FileName;
             }
+            undoToolStripMenuItem.Enabled = false;
         }
 
         //This will save as feature , used to save the file with new name
