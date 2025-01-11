@@ -12,17 +12,6 @@ namespace NotepadPro
             InitializeComponent();
         }
 
-        // This will open font dialog box to change font style &  size
-        private void fontToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fontDialog1.Font = richTextBox1.Font;
-            DialogResult dr = fontDialog1.ShowDialog();
-            if (dr == DialogResult.OK)
-            {
-                richTextBox1.Font = fontDialog1.Font;
-            }
-        }
-
         //This will Enable or Disable the Word Wrap feature
         private void wordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -85,7 +74,7 @@ namespace NotepadPro
         //This will clear and open fresh notepad
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(IsFileUpdated)
+            if (IsFileUpdated)
             {
                 DialogResult dr = MessageBox.Show("Do you want to save your changes?", "File Save", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 switch (dr)
@@ -99,7 +88,7 @@ namespace NotepadPro
                 }
             }
             else
-            { 
+            {
                 ClearScreen();
             }
             undoToolStripMenuItem.Enabled = false;
@@ -216,6 +205,96 @@ namespace NotepadPro
             IsFileUpdated = false;
             IsAlreadySaved = false;
             this.Text = "Untitled - Notepad Pro";
+        }
+
+        //This funtionality is for select All Text
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectAll();
+        }
+
+        //This is for Add Current System Date and Time to Text
+        private void timeDateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectedText = DateTime.Now.ToString();
+        }
+
+        //This is for change Text Font style
+        private void FontTextStyle(FontStyle fontStyle)
+        {
+            richTextBox1.SelectionFont = new Font(richTextBox1.Font, fontStyle);
+        }
+
+        //This is for make Text Font bold
+        private void boldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Bold);
+        }
+
+        //This is for make Text Font Italic
+        private void italicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Italic);
+        }
+
+        //This is for make Text Font Normal
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Regular);
+        }
+
+        //This is code for Add Underline to Text
+        private void underlineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Underline);
+        }
+
+        //This is code for Add Strikethrought to Text
+        private void strikethroughToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Strikeout);
+        }
+
+        // This will open font dialog box to change font style, color, & size of whole document
+        private void documentFontToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fontDialog1.Font = richTextBox1.Font;
+            fontDialog1.ShowColor = true;
+            DialogResult dr = fontDialog1.ShowDialog();
+
+            if (dr == DialogResult.OK)
+            {
+                richTextBox1.Font = fontDialog1.Font;
+                richTextBox1.ForeColor = fontDialog1.Color;
+            }
+        }
+
+        //This is code fo selected change Text Font style,Color,Size Functionality implemented here.
+        private void selectedTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = fontDialog1.ShowDialog();
+            fontDialog1.ShowColor = true;
+            if (dr == DialogResult.OK)
+            {
+                if (richTextBox1.SelectionLength > 0)
+                {
+                    richTextBox1.SelectionFont = fontDialog1.Font;
+                    richTextBox1.SelectionColor = fontDialog1.Color;
+                }
+            }
+        }
+
+        //This is code for selected change Text Color Functionality implemented here.
+        private void changeTextColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = colorDialog1.ShowDialog();
+            if(dr== DialogResult.OK)
+            {
+                if(richTextBox1.SelectionLength > 0)
+                {
+                    richTextBox1.SelectionColor=colorDialog1.Color;
+                }
+            }
         }
     }
 }
