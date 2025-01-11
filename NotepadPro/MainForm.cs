@@ -11,7 +11,7 @@ namespace NotepadPro
         {
             InitializeComponent();
         }
-
+        #region MainMenu
         //This will Enable or Disable the Word Wrap feature
         private void wordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -33,6 +33,8 @@ namespace NotepadPro
             richTextBox1.Undo();
             undoToolStripMenuItem.Enabled = false;
             redoToolStripMenuItem.Enabled = true;
+            UndotoolStrip.Enabled = false;
+            RedotoolStrip.Enabled = true;
         }
 
         //This will for Redo feature
@@ -41,6 +43,8 @@ namespace NotepadPro
             richTextBox1.Redo();
             undoToolStripMenuItem.Enabled = true;
             redoToolStripMenuItem.Enabled = false;
+            UndotoolStrip.Enabled = true;
+            RedotoolStrip.Enabled = false;
         }
 
         //This will Enable or Disable status bar
@@ -74,6 +78,12 @@ namespace NotepadPro
         //This will clear and open fresh notepad
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            NewMenu();
+            UndotoolStrip.Enabled = false;
+        }
+
+        private void NewMenu()
+        {
             if (IsFileUpdated)
             {
                 DialogResult dr = MessageBox.Show("Do you want to save your changes?", "File Save", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -97,6 +107,11 @@ namespace NotepadPro
         //This will open the dialog box to choose .txt or .rtf file and load  
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileMenu();
+        }
+
+        private void OpenFileMenu()
+        {
             string FileName = "";
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = "Text File|*.txt|Rich Text File|*.rtf";
@@ -116,6 +131,9 @@ namespace NotepadPro
                 CurrentFilename = openFileDialog1.FileName;
             }
             undoToolStripMenuItem.Enabled = false;
+            redoToolStripMenuItem.Enabled = false;
+            UndotoolStrip.Enabled = false;
+            RedotoolStrip.Enabled = false;
         }
 
         //This will save as feature , used to save the file with new name
@@ -162,6 +180,7 @@ namespace NotepadPro
         {
             IsFileUpdated = true;
             undoToolStripMenuItem.Enabled = true;
+            UndotoolStrip.Enabled = true;
         }
 
         //This is used for implement Save file feature
@@ -272,6 +291,11 @@ namespace NotepadPro
         //This is code fo selected change Text Font style,Color,Size Functionality implemented here.
         private void selectedTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FontFormat();
+        }
+
+        private void FontFormat()
+        {
             DialogResult dr = fontDialog1.ShowDialog();
             fontDialog1.ShowColor = true;
             if (dr == DialogResult.OK)
@@ -287,14 +311,102 @@ namespace NotepadPro
         //This is code for selected change Text Color Functionality implemented here.
         private void changeTextColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SelectedColorChange();
+        }
+
+        private void SelectedColorChange()
+        {
             DialogResult dr = colorDialog1.ShowDialog();
-            if(dr== DialogResult.OK)
+            if (dr == DialogResult.OK)
             {
-                if(richTextBox1.SelectionLength > 0)
+                if (richTextBox1.SelectionLength > 0)
                 {
-                    richTextBox1.SelectionColor=colorDialog1.Color;
+                    richTextBox1.SelectionColor = colorDialog1.Color;
                 }
             }
         }
+        #endregion
+
+        #region Tool Tip Menu
+        //Implemented "New File" functionality in Tool strip 
+        private void NewtoolStrip_Click(object sender, EventArgs e)
+        {
+            NewMenu();
+        }
+
+        //Implemented "Open File" functionality in Tool strip 
+        private void OpentoolStrip_Click(object sender, EventArgs e)
+        {
+            OpenFileMenu();
+        }
+
+        //Implemented "Save File" functionality in Tool strip 
+        private void SavetoolStrip_Click(object sender, EventArgs e)
+        {
+            SaveFileUpdate();
+        }
+
+        //Implemented "Save As File" functionality in Tool strip 
+        private void SaveAstoolStrip_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+
+        //Implemented "Undo" functionality in Tool strip 
+        private void UndotoolStrip_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Undo();
+            undoToolStripMenuItem.Enabled = false;
+            redoToolStripMenuItem.Enabled = true;
+            UndotoolStrip.Enabled = false;
+            RedotoolStrip.Enabled = true;
+        }
+
+        //Implemented "Redo" functionality in Tool strip 
+        private void RedotoolStrip_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Redo();
+            undoToolStripMenuItem.Enabled = true;
+            redoToolStripMenuItem.Enabled = false;
+            UndotoolStrip.Enabled = true;
+            RedotoolStrip.Enabled = false;
+        }
+
+        //Implemented "Bold Text" functionality in Tool strip 
+        private void BoldtoolStrip_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Bold);
+        }
+
+        //Implemented "Italic Text" functionality in Tool strip 
+        private void ItalictoolStrip_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Italic);
+        }
+
+        //Implemented "Underline Text" functionality in Tool strip 
+        private void UnderlinetoolStrip_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Underline);
+        }
+
+        //Implemented "Underline Text" functionality in Tool strip 
+        private void TextColorStrip_Click(object sender, EventArgs e)
+        {
+            SelectedColorChange();
+        }
+
+        //Implemented "Strike throught Text" functionality in Tool strip 
+        private void StrikethroughtoolStrip_Click(object sender, EventArgs e)
+        {
+            FontTextStyle(FontStyle.Strikeout);
+        }
+
+        //Implemented "Format Font Style" functionality in Tool strip 
+        private void FontstyletoolStrip_Click(object sender, EventArgs e)
+        {
+            FontFormat();
+        }
+        #endregion
     }
 }
