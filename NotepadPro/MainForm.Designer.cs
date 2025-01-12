@@ -83,6 +83,7 @@
             colorDialog1 = new ColorDialog();
             toolStripContainer1 = new ToolStripContainer();
             statusStrip1 = new StatusStrip();
+            MessageToolStripStatusLabel = new ToolStripStatusLabel();
             toolStrip1 = new ToolStrip();
             NewtoolStrip = new ToolStripButton();
             OpentoolStrip = new ToolStripButton();
@@ -106,13 +107,14 @@
             UnderlinetoolStrip = new ToolStripButton();
             StrikethroughtoolStrip = new ToolStripButton();
             toolStripSeparator16 = new ToolStripSeparator();
-            TextColorStrip = new ToolStripButton();
             FontstyletoolStrip = new ToolStripButton();
+            TextColorStrip = new ToolStripButton();
             menuStrip1.SuspendLayout();
             toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
             toolStripContainer1.TopToolStripPanel.SuspendLayout();
             toolStripContainer1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -220,7 +222,7 @@
             undoToolStripMenuItem.Image = Properties.Resources.arrow_undo;
             undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             undoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
-            undoToolStripMenuItem.Size = new Size(164, 22);
+            undoToolStripMenuItem.Size = new Size(180, 22);
             undoToolStripMenuItem.Text = "Undo";
             undoToolStripMenuItem.Click += undoToolStripMenuItem_Click;
             // 
@@ -230,62 +232,65 @@
             redoToolStripMenuItem.Image = Properties.Resources.arrow_redo;
             redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             redoToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Y;
-            redoToolStripMenuItem.Size = new Size(164, 22);
+            redoToolStripMenuItem.Size = new Size(180, 22);
             redoToolStripMenuItem.Text = "Redo";
             redoToolStripMenuItem.Click += redoToolStripMenuItem_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(161, 6);
+            toolStripSeparator4.Size = new Size(177, 6);
             // 
             // cutToolStripMenuItem
             // 
             cutToolStripMenuItem.Image = Properties.Resources.cut;
             cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
-            cutToolStripMenuItem.Size = new Size(164, 22);
+            cutToolStripMenuItem.Size = new Size(180, 22);
             cutToolStripMenuItem.Text = "Cut";
+            cutToolStripMenuItem.Click += cutToolStripMenuItem_Click;
             // 
             // copyToolStripMenuItem
             // 
             copyToolStripMenuItem.Image = Properties.Resources.copy;
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             copyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
-            copyToolStripMenuItem.Size = new Size(164, 22);
+            copyToolStripMenuItem.Size = new Size(180, 22);
             copyToolStripMenuItem.Text = "Copy";
+            copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
             // pasteToolStripMenuItem
             // 
             pasteToolStripMenuItem.Image = Properties.Resources.paste;
             pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             pasteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
-            pasteToolStripMenuItem.Size = new Size(164, 22);
+            pasteToolStripMenuItem.Size = new Size(180, 22);
             pasteToolStripMenuItem.Text = "Paste";
+            pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(161, 6);
+            toolStripSeparator5.Size = new Size(177, 6);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Image = Properties.Resources.delete;
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(164, 22);
+            deleteToolStripMenuItem.Size = new Size(180, 22);
             deleteToolStripMenuItem.Text = "Delete";
             // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(161, 6);
+            toolStripSeparator6.Size = new Size(177, 6);
             // 
             // selectAllToolStripMenuItem
             // 
             selectAllToolStripMenuItem.Image = Properties.Resources.Select_all;
             selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             selectAllToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
-            selectAllToolStripMenuItem.Size = new Size(164, 22);
+            selectAllToolStripMenuItem.Size = new Size(180, 22);
             selectAllToolStripMenuItem.Text = "Select All";
             selectAllToolStripMenuItem.Click += selectAllToolStripMenuItem_Click;
             // 
@@ -294,7 +299,7 @@
             timeDateToolStripMenuItem.Image = Properties.Resources.DateTime;
             timeDateToolStripMenuItem.Name = "timeDateToolStripMenuItem";
             timeDateToolStripMenuItem.ShortcutKeys = Keys.F5;
-            timeDateToolStripMenuItem.Size = new Size(164, 22);
+            timeDateToolStripMenuItem.Size = new Size(180, 22);
             timeDateToolStripMenuItem.Text = "Time/Date";
             timeDateToolStripMenuItem.Click += timeDateToolStripMenuItem_Click;
             // 
@@ -516,10 +521,16 @@
             // statusStrip1
             // 
             statusStrip1.Dock = DockStyle.None;
+            statusStrip1.Items.AddRange(new ToolStripItem[] { MessageToolStripStatusLabel });
             statusStrip1.Location = new Point(0, 0);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(838, 22);
             statusStrip1.TabIndex = 0;
+            // 
+            // MessageToolStripStatusLabel
+            // 
+            MessageToolStripStatusLabel.Name = "MessageToolStripStatusLabel";
+            MessageToolStripStatusLabel.Size = new Size(0, 17);
             // 
             // toolStrip1
             // 
@@ -538,6 +549,7 @@
             NewtoolStrip.Name = "NewtoolStrip";
             NewtoolStrip.Size = new Size(23, 22);
             NewtoolStrip.Text = "toolStripButton1";
+            NewtoolStrip.ToolTipText = "New File";
             NewtoolStrip.Click += NewtoolStrip_Click;
             // 
             // OpentoolStrip
@@ -548,6 +560,7 @@
             OpentoolStrip.Name = "OpentoolStrip";
             OpentoolStrip.Size = new Size(23, 22);
             OpentoolStrip.Text = "toolStripButton2";
+            OpentoolStrip.ToolTipText = "Open File";
             OpentoolStrip.Click += OpentoolStrip_Click;
             // 
             // toolStripSeparator11
@@ -563,6 +576,7 @@
             SavetoolStrip.Name = "SavetoolStrip";
             SavetoolStrip.Size = new Size(23, 22);
             SavetoolStrip.Text = "toolStripButton3";
+            SavetoolStrip.ToolTipText = "Save File";
             SavetoolStrip.Click += SavetoolStrip_Click;
             // 
             // SaveAstoolStrip
@@ -573,6 +587,7 @@
             SaveAstoolStrip.Name = "SaveAstoolStrip";
             SaveAstoolStrip.Size = new Size(23, 22);
             SaveAstoolStrip.Text = "toolStripButton4";
+            SaveAstoolStrip.ToolTipText = "Save As File";
             SaveAstoolStrip.Click += SaveAstoolStrip_Click;
             // 
             // toolStripSeparator12
@@ -588,6 +603,7 @@
             PrinttoolStrip.Name = "PrinttoolStrip";
             PrinttoolStrip.Size = new Size(23, 22);
             PrinttoolStrip.Text = "toolStripButton5";
+            PrinttoolStrip.ToolTipText = "Print File";
             // 
             // PrintPageStrip
             // 
@@ -597,6 +613,7 @@
             PrintPageStrip.Name = "PrintPageStrip";
             PrintPageStrip.Size = new Size(23, 22);
             PrintPageStrip.Text = "toolStripButton6";
+            PrintPageStrip.ToolTipText = "Print Page Setup";
             // 
             // toolStripSeparator13
             // 
@@ -611,6 +628,8 @@
             CuttoolStrip.Name = "CuttoolStrip";
             CuttoolStrip.Size = new Size(23, 22);
             CuttoolStrip.Text = "toolStripButton7";
+            CuttoolStrip.ToolTipText = "Cut";
+            CuttoolStrip.Click += CuttoolStrip_Click;
             // 
             // CopytoolStrip
             // 
@@ -620,6 +639,8 @@
             CopytoolStrip.Name = "CopytoolStrip";
             CopytoolStrip.Size = new Size(23, 22);
             CopytoolStrip.Text = "toolStripButton8";
+            CopytoolStrip.ToolTipText = "Copy";
+            CopytoolStrip.Click += CopytoolStrip_Click;
             // 
             // PastetoolStrip
             // 
@@ -629,6 +650,8 @@
             PastetoolStrip.Name = "PastetoolStrip";
             PastetoolStrip.Size = new Size(23, 22);
             PastetoolStrip.Text = "toolStripButton9";
+            PastetoolStrip.ToolTipText = "Paste";
+            PastetoolStrip.Click += PastetoolStrip_Click;
             // 
             // DeletetoolStrip
             // 
@@ -638,6 +661,7 @@
             DeletetoolStrip.Name = "DeletetoolStrip";
             DeletetoolStrip.Size = new Size(23, 22);
             DeletetoolStrip.Text = "toolStripButton10";
+            DeletetoolStrip.ToolTipText = "Delete";
             // 
             // toolStripSeparator14
             // 
@@ -653,6 +677,7 @@
             UndotoolStrip.Name = "UndotoolStrip";
             UndotoolStrip.Size = new Size(23, 22);
             UndotoolStrip.Text = "toolStripButton11";
+            UndotoolStrip.ToolTipText = "Undo";
             UndotoolStrip.Click += UndotoolStrip_Click;
             // 
             // RedotoolStrip
@@ -664,6 +689,7 @@
             RedotoolStrip.Name = "RedotoolStrip";
             RedotoolStrip.Size = new Size(23, 22);
             RedotoolStrip.Text = "toolStripButton12";
+            RedotoolStrip.ToolTipText = "Redo";
             RedotoolStrip.Click += RedotoolStrip_Click;
             // 
             // toolStripSeparator15
@@ -679,6 +705,7 @@
             BoldtoolStrip.Name = "BoldtoolStrip";
             BoldtoolStrip.Size = new Size(23, 22);
             BoldtoolStrip.Text = "toolStripButton13";
+            BoldtoolStrip.ToolTipText = "Bold";
             BoldtoolStrip.Click += BoldtoolStrip_Click;
             // 
             // ItalictoolStrip
@@ -689,6 +716,7 @@
             ItalictoolStrip.Name = "ItalictoolStrip";
             ItalictoolStrip.Size = new Size(23, 22);
             ItalictoolStrip.Text = "toolStripButton14";
+            ItalictoolStrip.ToolTipText = "Italic";
             ItalictoolStrip.Click += ItalictoolStrip_Click;
             // 
             // UnderlinetoolStrip
@@ -699,6 +727,7 @@
             UnderlinetoolStrip.Name = "UnderlinetoolStrip";
             UnderlinetoolStrip.Size = new Size(23, 22);
             UnderlinetoolStrip.Text = "toolStripButton15";
+            UnderlinetoolStrip.ToolTipText = "Underline";
             UnderlinetoolStrip.Click += UnderlinetoolStrip_Click;
             // 
             // StrikethroughtoolStrip
@@ -709,22 +738,13 @@
             StrikethroughtoolStrip.Name = "StrikethroughtoolStrip";
             StrikethroughtoolStrip.Size = new Size(23, 22);
             StrikethroughtoolStrip.Text = "toolStripButton1";
+            StrikethroughtoolStrip.ToolTipText = "Strikethrough";
             StrikethroughtoolStrip.Click += StrikethroughtoolStrip_Click;
             // 
             // toolStripSeparator16
             // 
             toolStripSeparator16.Name = "toolStripSeparator16";
             toolStripSeparator16.Size = new Size(6, 25);
-            // 
-            // TextColorStrip
-            // 
-            TextColorStrip.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            TextColorStrip.Image = Properties.Resources.textColor;
-            TextColorStrip.ImageTransparentColor = Color.Magenta;
-            TextColorStrip.Name = "TextColorStrip";
-            TextColorStrip.Size = new Size(23, 22);
-            TextColorStrip.Text = "toolStripButton16";
-            TextColorStrip.Click += TextColorStrip_Click;
             // 
             // FontstyletoolStrip
             // 
@@ -734,7 +754,19 @@
             FontstyletoolStrip.Name = "FontstyletoolStrip";
             FontstyletoolStrip.Size = new Size(23, 22);
             FontstyletoolStrip.Text = "toolStripButton1";
+            FontstyletoolStrip.ToolTipText = "Font Style";
             FontstyletoolStrip.Click += FontstyletoolStrip_Click;
+            // 
+            // TextColorStrip
+            // 
+            TextColorStrip.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            TextColorStrip.Image = Properties.Resources.textColor;
+            TextColorStrip.ImageTransparentColor = Color.Magenta;
+            TextColorStrip.Name = "TextColorStrip";
+            TextColorStrip.Size = new Size(23, 22);
+            TextColorStrip.Text = "toolStripButton16";
+            TextColorStrip.ToolTipText = "Font Color";
+            TextColorStrip.Click += TextColorStrip_Click;
             // 
             // MainForm
             // 
@@ -760,6 +792,8 @@
             toolStripContainer1.TopToolStripPanel.PerformLayout();
             toolStripContainer1.ResumeLayout(false);
             toolStripContainer1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             ResumeLayout(false);
@@ -847,5 +881,6 @@
         private ToolStripButton TextColorStrip;
         private ToolStripButton StrikethroughtoolStrip;
         private ToolStripButton FontstyletoolStrip;
+        private ToolStripStatusLabel MessageToolStripStatusLabel;
     }
 }

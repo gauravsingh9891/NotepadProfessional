@@ -102,6 +102,7 @@ namespace NotepadPro
                 ClearScreen();
             }
             undoToolStripMenuItem.Enabled = false;
+            MessageToolStripStatusLabel.Text = "New Document Created";
         }
 
         //This will open the dialog box to choose .txt or .rtf file and load  
@@ -129,6 +130,8 @@ namespace NotepadPro
                 IsAlreadySaved = true;
                 IsFileUpdated = false;
                 CurrentFilename = openFileDialog1.FileName;
+
+                MessageToolStripStatusLabel.Text = "File Opened";
             }
             undoToolStripMenuItem.Enabled = false;
             redoToolStripMenuItem.Enabled = false;
@@ -325,6 +328,37 @@ namespace NotepadPro
                 }
             }
         }
+
+        //Implemented "Cut" functionality in Menu strip 
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //richTextBox1.Cut();
+            if (richTextBox1.SelectionLength > 0)
+            {
+                Clipboard.SetText(richTextBox1.SelectedText);
+                richTextBox1.SelectedText = "";
+            }
+        }
+
+        //Implemented "Copy" functionality in Menu strip 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //richTextBox1.Copy();
+            if (richTextBox1.SelectionLength > 0)
+            {
+                Clipboard.SetText(richTextBox1.SelectedText);
+            }
+        }
+
+        //Implemented "Paste" functionality in Menu strip 
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //richTextBox1.Paste();
+            if (Clipboard.ContainsText())
+            {
+                richTextBox1.SelectedText = Clipboard.GetText();
+            }
+        }
         #endregion
 
         #region Tool Tip Menu
@@ -408,5 +442,23 @@ namespace NotepadPro
             FontFormat();
         }
         #endregion
+
+        //Implemented "Cut" functionality in Tool strip 
+        private void CuttoolStrip_Click(object sender, EventArgs e)
+        {
+            cutToolStripMenuItem.PerformClick();
+        }
+
+        //Implemented "Copy" functionality in Tool strip 
+        private void CopytoolStrip_Click(object sender, EventArgs e)
+        {
+           copyToolStripMenuItem.PerformClick();
+        }
+
+        //Implemented "Paste" functionality in Tool strip 
+        private void PastetoolStrip_Click(object sender, EventArgs e)
+        {
+            pasteToolStripMenuItem.PerformClick();
+        }
     }
 }
